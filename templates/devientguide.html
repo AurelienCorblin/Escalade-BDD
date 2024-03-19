@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<title>Escalade</title>
+
+<style>
+    body{
+        background-color: #384454;
+    }
+</style>
+<body>
+
+    <div style="float: left; width: 100%;height: 50px; background-color:#E1A624;vertical-align: middle;line-height: 50px;text-align: center;">
+        <a style="padding-left: 2%;" href = "{{url_for('accueil')}}">Accueil</a>
+        <a style="padding-left: 2%;" href = "{{url_for('guide')}}">Recherche de Guides</a>
+        <a style="padding-left: 2%;" href = "{{url_for('site')}}">Recherche de Voies</a>
+        <a style="padding-left: 2%;" href = "{{url_for('sortie')}}">Sorties</a>
+        <a style="padding-left: 2%;" href = "{{url_for('membres')}}">Membres</a>
+        <a style="padding-left: 2%;" href = "{{url_for('cordee')}}">Cordee</a>
+        <a style="float: right;" href="{{url_for('profil')}}"><img src = "{{ url_for('static', filename = 'profil.jpg') }}" alt = "logo_profil" width = "50"></a>
+    </div>
+
+    {% if not guide %} 
+    <div style="background-color: #D4D3DC;width: 33%;margin: 33%;margin-top: 5%;position: absolute;border: 4px solid black">
+        <p style="text-align: center;font-size: 40px;">Devenir guide</p>
+        
+        <form method="post" action="/creerguide">
+            <p style="text-align: center;">niveau max auquel vous pouvez encadrer en tant que guide<select name ="niv_max">
+                {% for elem in diff %}
+                    <option>
+                        {{elem.id_diff}}
+                    </option>
+                {% endfor %}
+                </select></p>
+            <p style="text-align: center;">
+                <input type="submit" value="Confirmer"><br>
+            </p>
+        </form>
+    </div>
+    {% endif %}
+
+    {% if guide %}
+    <div style="background-color: #D4D3DC;width: 33%;margin: 33%;margin-top: 5%;position: absolute;border: 4px solid black">
+        <p style="text-align: center;font-size: 40px;">Devenir guide</p>
+        
+        <form method="post" action="/exerceguide">
+            <p style="text-align: center;">localite dans laquelle vous voulez exercez<select name ="localite">
+                {% for elem in localite %}
+                    <option>
+                        {{elem.localite}}
+                    </option>
+                {% endfor %}
+                </select></p>
+            <p style="text-align: center;">
+                <input type="submit" value="Confirmer"><br>
+            </p>
+        </form>
+        <p style="text-align: center;">localite où vous exercez deja :
+        {% for elem in exerce %}
+            <ul>
+            {{elem.localite}}
+            </ul>
+        {% endfor %}
+        </p>
+    </div>
+    {% endif %}
+</body>
+</html>

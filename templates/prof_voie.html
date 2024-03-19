@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+<title>Escalade</title>
+
+<style>
+    body{
+        background-color: #384454;
+    }
+    p{
+        text-align: center;
+    }
+</style>
+<body>
+
+    <div style="position: relative;float: left; width: 100%;height: 50px; background-color:#E1A624;vertical-align: middle;line-height: 50px;text-align: center;">
+        <a style="padding-left: 2%;" href = "{{url_for('accueil')}}">Accueil</a>
+        <a style="padding-left: 2%;" href = "{{url_for('guide')}}">Recherche de Guides</a>
+        <a style="padding-left: 2%;" href = "{{url_for('site')}}">Recherche de Voies</a>
+        <a style="padding-left: 2%;" href = "{{url_for('sortie')}}">Sorties</a>
+        <a style="float: right;" href="{{url_for('profil')}}"><img src = "{{ url_for('static', filename = 'profil.jpg') }}" alt = "logo_profil" width = "50"></a>
+    </div>
+
+    <div style="background-color: #D4D3DC;width: 33%;margin: 33%;margin-top: 5%;position: absolute;border: 4px solid black">
+        <p style="text-align: center;font-size: 40px;"> {{info[0].nom_voie}} </p>
+        <p>localite : {{info[0].localite}} </p>
+        <p>longueur : {{info[0].longueur}} km</p>
+        <p>site : {{info[0].nom_site}} </p>
+        <p>type de voie : {{info[0].type_voie}} </p>
+        <p>difficulte : {{info[0].diff_fr}} </p>
+        <br>
+        <p style="font-size: 25px;">date d'ouverture par style :</p>
+        {% if not d %} <p>Cette voie n'a pas encore été escaladée</p> {% endif %}
+        {% for elem in d %}
+            <p> style: {{elem[0].nom_type}}</p> 
+            <p>ouvert le {{elem[0].esc_date}}</p> 
+            <p>par la cordee : {{elem[0].nom_cordee}}</p><br>
+        {% endfor %}
+    </div>
+
+</body>
+</html>

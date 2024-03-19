@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+<title>Escalade</title>
+
+<style>
+    body{
+        background-color: #384454;
+    }
+</style>
+<body>
+
+    <div style="float: left; width: 100%;height: 50px; background-color:#E1A624;vertical-align: middle;line-height: 50px;text-align: center;">
+        <a style="padding-left: 2%;" href = "{{url_for('accueil')}}">Accueil</a>
+        <a style="padding-left: 2%;" href = "{{url_for('guide')}}">Recherche de Guides</a>
+        <a style="padding-left: 2%;" href = "{{url_for('site')}}">Recherche de Voies</a>
+        <a style="padding-left: 2%;" href = "{{url_for('sortie')}}">Sorties</a>
+        <a style="padding-left: 2%;" href = "{{url_for('membres')}}">Membres</a>
+        <a style="padding-left: 2%;" href = "{{url_for('cordee')}}">Cordee</a>
+        <a style="float: right;" href="{{url_for('profil')}}"><img src = "{{ url_for('static', filename = 'profil.jpg') }}" alt = "logo_profil" width = "50"></a>
+    </div>
+
+    <div style="background-color: #D4D3DC;width: 40%;margin: 5%;margin-top: 5%;position: absolute;border: 4px solid black">
+        <p style="text-align: center;font-size: 40px;">Cordee a rejoindre</p>
+        <form method="get" action="/rejoindre">
+            {% for elem in lstcord %}
+            <ul>
+              <p>{{elem.nom_cordee}}&nbsp&nbsp&nbsp&nbsp
+            rejoindre :<input type="checkbox" name="rejoint" value= {{elem.nom_cordee}}></p>
+            </ul>
+            {% endfor %}
+            <p style="text-align: center;"><input type="submit" value="Valider"></p>
+        </form>
+    </div>
+
+    <div style="background-color: #D4D3DC;width: 40%;margin: 55%;margin-top: 5%;position: absolute;border: 4px solid black">
+        <p style="text-align: center;font-size: 40px;">Cordee a rejoindre</p>
+        <form method="post" action="/creer">
+            <p style="text-align: center;">nom de cordee :<input type="text" name="creer"></p>
+            <p style="text-align: center;"><input type="submit" value="Creer"></p>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+<title>Escalade</title>
+
+<style>
+    body{
+        background-color: #384454;
+        height: 100%;
+    }
+</style>
+<body>
+
+    <div style="position: relative;float: left; width: 100%;height: 50px; background-color:#E1A624;vertical-align: middle;line-height: 50px;text-align: center;">
+        <a style="padding-left: 2%;" href = "{{url_for('accueil')}}">Accueil</a>
+        <a style="padding-left: 2%;" href = "{{url_for('guide')}}">Recherche de Guides</a>
+        <a style="padding-left: 2%;" href = "{{url_for('site')}}">Recherche de Voies</a>
+        <a style="padding-left: 2%;" href = "{{url_for('sortie')}}">Sorties</a>
+        <a style="float: right;" href="{{url_for('profil')}}"><img src = "{{ url_for('static', filename = 'profil.jpg') }}" alt = "logo_profil" width = "50"></a>
+    </div>
+    <div style="background-color: #D4D3DC;width: 80%;margin: 10%;margin-top: 5%;position: absolute;border: 4px solid black">
+        <p style="text-align: center;font-size: 40px;">Creer nouvelle sorties</p>
+        <form method="post" action="/creersortie">
+            <ul>
+                <p style="text-align: center;">description :<textarea name="desc"></textarea> &nbsp&nbsp date: <input type="date" name="date">
+                    &nbsp&nbsp niveau minimum : <select name ="niv_min">
+                    {% for elem in diff %}
+                        <option>
+                            {{elem.id_diff}}
+                        </option>
+                    {% endfor %}
+                    </select>
+                    &nbsp&nbsp
+                    site souhaité : <select name ="site">
+                        {% for elem in site %}
+                            <option>
+                                {{elem.nom_site}}
+                            </option>
+                        {% endfor %}
+                        </select>
+                        &nbsp&nbsp
+                    nombre de participant maximum<input type="number" name="maxpart" min = 2 max = 100></p>
+            </ul>
+            <p style="text-align: center;"><input type="submit" value="Confirmer"><br></p>
+        </form>
+    </div>
+
+    <div style="background-color: #D4D3DC;width: 40%;margin: 5%;margin-top: 25%;position: absolute;border: 4px solid black">
+        <p style="text-align: center;font-size: 40px;">Sorties a rejoindre</p>
+        <form method="get" action="/participe">
+            {% for elem in affiche %}
+            <ul>
+                <p>
+                la sortie aura lieu le {{elem.date_sortie}} sur le site : {{elem.site_sortie}} avec un niveau minimum de {{elem.niv_min}}.<br>
+                description : {{elem.sortie_desc}}<br>
+                participant : {{elem.nbpart}}/{{elem.max_part}}
+                </p>
+            <p>participer :<input type="checkbox" name="participe" value= {{elem.id_sortie}}></p>
+            </ul>
+            {% endfor %}
+            <p style="text-align: center;"><input type="submit" value="Valider"></p>
+        </form>
+        <p style="text-align: center;font-size: 40px;">Sorties auxquels vous participez</p>
+            {% for elem in participe %}
+            <ul>
+            <p>
+                la sortie aura lieu le {{elem.date_sortie}} sur le site : {{elem.site_sortie}} avec un niveau minimum de {{elem.niv_min}}.<br>
+                description : {{elem.sortie_desc}}<br>
+                participant : {{elem.nbpart}}/{{elem.max_part}}
+            </p>
+            </ul>
+            {% endfor %}
+    </div>
+    <div style="background-color: #D4D3DC;width: 40%;margin: 55%;margin-top: 25%;position: absolute;border: 4px solid black">
+        <p style="text-align: center;font-size: 40px;">Vos propositions</p>
+        {% for elem in messorties %}
+        <ul>
+            <p>
+                la sortie aura lieu le {{elem.date_sortie}} sur le site : {{elem.site_sortie}} avec un niveau minimum de {{elem.niv_min}}.<br>
+                description : {{elem.sortie_desc}}<br>
+                participant : {{elem.nbpart}}/{{elem.max_part}}
+            </p>
+            <form method="post" action="/gest_sortie">
+                Annuler <input type="checkbox" name="annuler" value= {{elem.id_sortie}}>
+                Valider <input type="checkbox" name="valider" value= {{elem.id_sortie}}>
+                <input type="submit" value="confirmer">
+            </form>
+        </ul>
+        {% endfor %}
+    </div>
+
+</body>
+</html>

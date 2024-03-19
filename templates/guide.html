@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+<title>Escalade</title>
+
+<style>
+    body{
+        background-color: #384454;
+    }
+</style>
+<body>
+
+    <div style="position: relative;float: left; width: 100%;height: 50px; background-color:#E1A624;vertical-align: middle;line-height: 50px;text-align: center;">
+        <a style="padding-left: 2%;" href = "{{url_for('accueil')}}">Accueil</a>
+        <a style="padding-left: 2%;" href = "{{url_for('guide')}}">Recherche de Guides</a>
+        <a style="padding-left: 2%;" href = "{{url_for('site')}}">Recherche de Voies</a>
+        <a style="padding-left: 2%;" href = "{{url_for('sortie')}}">Sorties</a>
+        <a style="float: right;" href="{{url_for('profil')}}"><img src = "{{ url_for('static', filename = 'profil.jpg') }}" alt = "logo_profil" width = "50"></a>
+    </div>
+
+    <div style="background-color: #D4D3DC;width: 33%;margin: 33%;margin-top: 5%;position: absolute;border: 4px solid black">
+        <p style="text-align: center;font-size: 40px;">Recherche de guides</p>
+        <form method="get" action="res_search_guid">
+            <p style="text-align: center;">Recherche par localité :
+            <select name ="localite">
+                {% for elem in localite %}
+                    <option>
+                        {{elem.localite}}
+                    </option>
+                {% endfor %}
+            </select>
+            </p>
+            <br><p style="text-align: center;">Recherche par voie :
+            <select name ="voie">
+                {% for elem in voie %}
+                    <option>
+                        {{elem.nom_voie}}
+                    </option>
+                {% endfor %}
+            </select>
+            </p>
+            <p style="text-align: center;"><input type="submit" value="Rechercher"></p>
+        </form>
+        <p style="text-align: center;font-size: 25px;">guides n'ayant rien proposés depuis plus d'un an :</p>
+        {% for elem in controle_guide %}
+        <p style="text-align: center;"> {{elem.nom}} {{elem.prenom}} </p>
+        {% endfor %}
+    </div>
+
+</body>
+</html>

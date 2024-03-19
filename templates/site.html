@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<title>Escalade</title>
+
+<style>
+    body{
+        background-color: #384454;
+    }
+    p{
+        text-align: center;
+    }
+</style>
+<body>
+
+    <div style="position: relative;float: left; width: 100%;height: 50px; background-color:#E1A624;vertical-align: middle;line-height: 50px;text-align: center;">
+        <a style="padding-left: 2%;" href = "{{url_for('accueil')}}">Accueil</a>
+        <a style="padding-left: 2%;" href = "{{url_for('guide')}}">Recherche de Guides</a>
+        <a style="padding-left: 2%;" href = "{{url_for('site')}}">Recherche de Voies</a>
+        <a style="padding-left: 2%;" href = "{{url_for('sortie')}}">Sorties</a>
+        <a style="float: right;" href="{{url_for('profil')}}"><img src = "{{ url_for('static', filename = 'profil.jpg') }}" alt = "logo_profil" width = "50"></a>
+    </div>
+
+    <div style="background-color: #D4D3DC;width: 33%;margin: 33%;margin-top: 5%;position: absolute;border: 4px solid black">
+        <p style="text-align: center;font-size: 40px;">Recherche de voies</p>
+        <form method="get" action="res_voie">
+            <p> longueur min : <input type="number" name="min_len" min = 0 max = 100> 
+                longueur max : <input type="number" name="max_len" min = 0 max = 100>
+            </p>
+            <p>Recherche par localité :
+                <select name ="localite">
+                    {% for elem in localite %}
+                        <option>
+                            {{elem.localite}}
+                        </option>
+                    {% endfor %}
+                </select>
+            </p>
+            <p>Recherche par site :
+                <select name ="site">
+                    {% for elem in site %}
+                        <option>
+                            {{elem.nom_site}}
+                        </option>
+                    {% endfor %}
+                </select>
+            </p>
+            <p> difficulte min : <input type="number" name="min_diff" min = 1 max = 19> 
+                difficulte max : <input type="number" name="max_diff" min = 1 max = 19>
+            </p>
+            <p>Recherche par type :
+                <select name ="type">
+                    {% for elem in type %}
+                        <option>
+                            {{elem.type_voie}}
+                        </option>
+                    {% endfor %}
+                </select>
+            </p>
+            <p><input type="submit" value="Chercher">
+        </form>
+    </div>
+
+</body>
+</html>
